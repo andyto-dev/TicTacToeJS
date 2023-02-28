@@ -85,6 +85,7 @@ let resetGame = () => {
         clearPlayerBg(playerBtn);
         gameUI.forEach(panel => panel.childNodes.forEach(child => child.remove()));
     })
+    updateMessage();
     gameState = new TicTacToeState(3);
 }
 let undo = () => {
