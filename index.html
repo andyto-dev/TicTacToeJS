@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/tictactoe.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Tic Tac Toe</h1>
+        <h3>Choose a player to start:</h3>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <button type="button" class="btn playerBtn" data-player-id="1"><img src="svg/hollow-circle.svg" class="mx-auto d-block" width="100px"></button>
+                <p>Player 1</p>
+            </div>
+            <div class="col-md-6 text-center">
+                <button type="button" class="btn playerBtn" data-player-id="2"><img src="svg/red-cross.svg" class="mx-auto d-block" width="100px"></button>
+                <p>Player 2</p>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table-bordered">
+                <tr>
+                    <td id="x0y0" class="game-ui text-center"></td>
+                    <td id="x1y0" class="game-ui text-center"></td>
+                    <td id="x2y0" class="game-ui text-center"></td>
+                </tr>
+                <tr>
+                    <td id="x0y1" class="game-ui text-center"></td>
+                    <td id="x1y1" class="game-ui text-center"></td>
+                    <td id="x2y1" class="game-ui text-center"></td>
+                </tr>
+                <tr>
+                    <td id="x0y2" class="game-ui text-center"></td>
+                    <td id="x1y2" class="game-ui text-center"></td>
+                    <td id="x2y2" class="game-ui text-center"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="message-box"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-secondary" id="undoBtn">Undo</button>
+                <button type="button" class="btn btn-warning" id="resetBtn">Reset</button>
+                <button type="button" class="btn btn-secondary" id="redoBtn">Redo</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="module" src="js/TicTacToeUI.js"></script>
+</html>

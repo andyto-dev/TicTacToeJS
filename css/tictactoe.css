@@ -1,0 +1,16 @@
+.game-ui {
+    width: 200px;
+    height: 200px;
+}
+
+.bg-current-player {
+    background-color: #548cde;
+}
+
+.bg-winner-player {
+    background-color: #a5ffa5;
+}
+
+.btn:disabled {
+    border: 0px;
+}
