@@ -5,12 +5,21 @@ const playerBtns = Array.from(document.getElementsByClassName("playerBtn"));
 const undoBtn = document.getElementById("undoBtn");
 const redoBtn = document.getElementById("redoBtn");
 const resetBtn = document.getElementById("resetBtn");
+// in other cases you used camelCase. Would be nice to stick to the same convention
 const messageBox = document.getElementById("message-box");
 
+// this is never reassigned. you should be able to use const.
 let gameUI = Array.from(document.getElementsByClassName("game-ui"));
+// 3 is a magic number. Have it in some const
 let gameState = new TicTacToeState(3);
 
+// do you need to have two for loops here?
+// it seems that you went two times through the playerBtns array
+// can you accomplish the same thing if you go through it once?
 playerBtns.forEach(player => {
+    // this event listener is anonymous which isn't the best idea if we want to use it in some other place.
+    // it isn't a big deal here, and it's a good practice to have a separate function for event handling.
+    // player.addEventListener('click', handlePlayerClick);
     player.addEventListener("click", (event) => {
         playerBtns.forEach(element => element.disabled = true);
         gameState.startGame(getPlayerIdFromButton(player));
@@ -18,12 +27,15 @@ playerBtns.forEach(player => {
     })
 });
 gameUI.forEach(element => {
+    // separate function for event handling.
     element.addEventListener("click", (event) => {
         if (!gameState.isGameStarted()) {
             updateMessage(createAlertMessage("alert-warning", "Please start the game by selecting a player."));
             return;
         }
         let currentPlayerId = gameState.currentPlayerId;
+        // did you ever catch this error?
+        // not sure if it's possible because every time that you catch a click event, it should have event.target.id
         if (!event.target.id) {
             updateMessage(createAlertMessage("alert-warning", "Please click on an empty position"));
             return;
@@ -43,10 +55,16 @@ gameUI.forEach(element => {
         changePlayerBackground(nextPlayerId, "bg-current-player");
     })
 });
+
+// this is good, you have a separate function for event handling
+// just a small improovement 
+// you can just have undoBtn.addEventListener("click", undo);
+// same for few lines below
 undoBtn.addEventListener("click", () => undo());
 redoBtn.addEventListener("click", () => redo());
 resetBtn.addEventListener("click", () => resetGame());
 
+// you are creating a function here. You don't want it's value to be changed. use const
 let createPlayerImage = (playerId) => {
     let image = document.createElement("img");
     image.src = getPlayerImage(playerId);
@@ -54,8 +72,11 @@ let createPlayerImage = (playerId) => {
     image.setAttribute("width", "200px");
     return image;
 }
+// const
 let getPlayerImage = (playerId) => playerImages[playerId - 1];
+// const
 let getPlayerIdFromButton = (btn) => parseInt(btn.getAttribute("data-player-id"));
+// const
 let changePlayerBackground = (playerId, backgroundClass) => {
     playerBtns.forEach(player => {
         if (getPlayerIdFromButton(player) === playerId) {
@@ -65,6 +86,7 @@ let changePlayerBackground = (playerId, backgroundClass) => {
         }
     })
 }
+// const
 let clearPlayerBg = (playerBtn) => {
     Array.from(playerBtn.parentElement.classList).forEach(clazz => {
         if (clazz.startsWith("bg-")) {
@@ -72,6 +94,7 @@ let clearPlayerBg = (playerBtn) => {
         }
     });
 }
+// const
 let createAlertMessage = (alertStyle, text) => {
     let alert = document.createElement("div");
     alert.classList.add("alert", alertStyle)
@@ -79,6 +102,7 @@ let createAlertMessage = (alertStyle, text) => {
     alert.appendChild(document.createTextNode(text));
     return alert;
 }
+// const
 let resetGame = () => {
     playerBtns.forEach(playerBtn => {
         playerBtn.disabled = false;
@@ -88,6 +112,7 @@ let resetGame = () => {
     updateMessage();
     gameState = new TicTacToeState(3);
 }
+// const
 let undo = () => {
     let lastPlayerMove = gameState.undo();
     if (!lastPlayerMove) {
@@ -98,6 +123,7 @@ let undo = () => {
     lastPlayerMoveUI.childNodes.forEach(child => child.remove());
     changePlayerBackground(gameState.currentPlayerId, "bg-current-player");
 }
+// const
 let redo = () => {
     let nextPlayerMove = gameState.redo();
     if (!nextPlayerMove) {
@@ -108,6 +134,7 @@ let redo = () => {
     nextPlayerMoveUI.appendChild(createPlayerImage(gameState.currentPlayerId));
     changePlayerBackground(gameState.currentPlayerId, "bg-current-player");
 }
+// const
 let updateMessage = (alertElement) => {
     messageBox.childNodes.forEach(child => child.remove());
     if (alertElement) {
